@@ -1,0 +1,124 @@
+style="width: 100pr;height: 100pr;"
+
+{{user.user_image.url}}
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#edit").hide();
+  		$("#one").click(function(){
+    $("p").hide() ;
+    $("#edit").show();
+  
+  });
+
+});
+</script>
+</head>
+<body>
+
+<p>If you click on the "Hide" button, I will disappear.</p>
+
+<div id="edit"><h1> Hello </h1></div>
+<button id="one">try</button>
+
+
+</body>
+</html>
+
+
+
+style="width: 100pr;height: 100pr;"
+
+{{user.user_image.url}}
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#edit").hide();
+  		$("#one").click(function(){
+    $("#exist").hide() ;
+    $("#edit").show();
+  
+  });
+
+});
+</script>
+</head>
+<body>
+
+<div id=exist>
+	<h1>If you click on the "Hide" button, I will disappear.</h1> <br>
+	<button id="one">try</button>
+</div> <br>
+
+<div id="edit"><h1> Hello </h1></div>
+
+</body>
+</html>
+ 
+
+
+
+
+
+
+WHATS API?
+Application Programing Interface
+
+JSON
+import json
+USE TWO METHOD
+1 LOAD : json to python
+2 DUMPS : python to json
+
+
+serialization
+
+to converting python obj to jason
+-> three ways
+
+
+C creat  POST
+R read   GET
+U update PUT/PATCH
+D delete DELETE
+
+
+*home page>newsfeed > action on increament on product
+*mark price is original price of product
+* top ten bidder of product
+* no of view of product
+* currently how manay people on website
+
+
+
+
+
+   

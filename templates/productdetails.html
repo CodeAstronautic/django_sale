@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page %}
+
+
+
+
+<body>
+
+<!--new form by me for product details-->
+
+  <section class="site-section" id="about-section">
+    <div class="container">
+        
+      <div class="row large-gutters">
+        <div class="col-lg-6 mb-5">
+        
+              <div class="owl-carousel slide-one-item with-dots">
+                  <div><img src="{{products.product_image.url}}" alt="Image" class="img-fluid" ></div>
+<!--              <div><img src="{% static 'images/img_2.jpg' %}" alt="Image" class="img-fluid"></div>
+                  <div><img src="{% static 'images/img_3.jpg' %}" alt="Image" class="img-fluid"></div>
+-->
+                </div>
+
+          </div>
+          <div class="col-lg-6 ml-auto">
+            
+            <h2 class="section-title mb-3">{{products.product_name}}</h2>
+                <p class="lead">{{products.description}}</p>
+                
+
+                <ul class="list-unstyled ul-check success">
+                  <li><b> Auctioneer Name</b>                              {{products.first_name.first_name}}</li>
+                  <li><b> {{products.category.category}} name</b>          {{products.product_name}}</li>
+                  <li ><b> Mark Price</b>                                   ₹<span id="markedprice">{{products.product_price}}</span></li>
+                  <li><b>Latest Bidding Price</b>                           ₹{{prices.add_price}}</li>
+                  <li><b>Result Date</b>                                    {{products.rdate}}</li>
+                  <!-- <li><b> Category</b>       {{product.category.category}}</li> -->
+                  
+                 
+                </ul>
+<!-- JAVA -->
+                <script>
+                  function compare(){
+                      var enteredprice= document.getElementById("enteredprice").value;
+                      var markedprice= document.getElementById("markedprice").innerHTML;
+                      if (parseInt(enteredprice)<parseInt(markedprice)){
+                          window.alert('Price must be greater');
+                          return false;
+                      }
+                      else{
+                        return true;
+                      }
+                     
+                  }
+                    </script>
+
+<!-- JAVAEND  -->
+
+
+
+{% if products.first_name == user %}
+
+
+<a href="#topten" class="smoothscroll">Top Ten Bidders</a>
+                
+
+
+{% elif user.is_authenticated %}
+            <form method='post' action="{% url 'addprice' id=products.id  %}" onsubmit="return compare()">
+
+              {% csrf_token %}
+              <div class="col-md-6">
+                  <input type="text" id="enteredprice" class="form-control" name="add_price" placeholder="Your Price">
+                    <div class="row form-group">
+                      <div class="col-md-6">
+                          <br>
+                        <button class="btn btn-primary btn-md text-white" value="blank=true">OVERBID</button> 
+                      </div>
+                    </div>
+              </div>
+            </form>
+{% else %}
+              
+                  <div class="row form-group">
+                      <div class="col-md-12">
+                      <a href="{% url 'index' %}#login-section" class="nav-link">Log In and Bid Up</a> 
+                      </div>
+                  </div>
+{% endif %}
+          </div>
+        </div>
+      </div>
+  </section>
+
+
+
+  
+
+<!--new form end -->
+
+<section class="site-section"id="topten">
+  <div class="container">  
+    <div class="row large-gutters">
+      <div class="col-lg-6 mb-5">        
+          <h2 class="section-title mb-3">Top Ten Bidders for This product</h2>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Added Price</th>
+              </tr>
+            </thead>
+            {% for topten in topten|slice:":10"  %} 
+            <tbody>
+        
+              <tr>
+               
+                <td><li>{{topten.first_name}}</li></td>
+                <td>{{topten.add_price}}</td>
+                
+              </tr>
+            </tbody>
+            {% endfor %} 
+          </table>
+        
+        </div>
+      </div>
+    </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block page %}
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!--for edit profile-->
+  <script>
+    $(document).ready(function(){
+      $("#edit").hide();
+          $("#one").click(function(){
+        $("#exist").hide();
+        $("#edit").show();
+      });
+     });
+
+  </script>
+
+  <script> 
+    $(document).ready(function(){
+      $("#pass").show();
+      $("#passtitle").hide()
+        $("#newpass").click(function(){
+      // $("#pass").show();
+      $("#newpass").hide();
+      $("#exist").hide();
+      $("#passtitle").show();
+    });
+  });
+  </script>
+
+  <script>
+  function checkPasword(){
+
+    if (document.getElementById('password1').value == document.getElementById('password2').value ){
+      return true;
+    }
+    else{
+      alert('Please enter Correct Password')
+      return false;
+    }
+  }
+  </script>
+
+<body>    
+<!--    user profile Display area  --> 
+
+<section class="site-section" id="exist">
+    <div class="container">
+      <h2 class="section-title mb-3">Welcome To Your Profile {{user.first_name}}</h2> 
+      
+      <div class="row large-gutters">
+        <div class="col-lg-6 mb-5">
+              <div class="owl-carousel slide-one-item with-dots">
+                <div><img src="{{ user.profile.url }}" alt="Image" class="img-fluid" style="width: 400px;height: 400px;"></div>
+              </div>
+        </div>
+
+          <div class="col-lg-6 ml-autho"> 
+          
+                <ul class="list-unstyled ul-check success">
+                  <li>{{user.first_name}} {{user.last_name}}</li>
+                  <li>{{user.phone}}</li>
+                  <li>{{user.email}}</li>
+                  <li>{{user.address}}</li>
+                  <button id="one" class="btn btn-primary btn-md text-white"> Edit Profile </button>
+                  <button  id="newpass" class="btn btn-primary btn-md text-white"> Change Password </button> 
+                </ul>
+          </div>
+      </div>
+    </div>
+</section>
+<!--    user profile Display area end  -->
+
+<!--    user profile edit area  -->
+
+<form method="POST" action="{% url 'userprofile' %}" class="p-5 bg-white"  enctype = "multipart/form-data">
+              
+  {% csrf_token %}
+
+<section class="site-section" id="edit">
+    <div class="container">
+      <h2 class="section-title mb-3">Edit Your Profile {{user.first_name}}</h2> 
+      <div class="row large-gutters">
+        <div class="col-lg-6 mb-5">
+              <div class="owl-carousel slide-one-item with-dots">
+                <div><img src="{{ user.profile.url }}"alt="Image" class="img-fluid" style="width: 400px;height: 400px;"></div>
+              </div>
+
+              <input type='file'  class="form-control" name="profile" value="{{user.profile}}">
+
+
+        </div>
+          <div class="col-lg-6 ml-auto"> 
+              <div class="row form-group">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <label class="text-black" for="fname">First Name</label>
+                  <input type="text" id="fname" class="form-control" name="first_name" value="{{user.first_name}}">
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black" for="lname">Last Name</label>
+                  <input type="text" id="lname" class="form-control" name="last_name" value="{{user.last_name}}">
+                </div>
+              </div>
+
+
+              <div class="row form-group">
+                
+                <div class="col-md-6">
+                  <label class="text-black" for="phone">Mobile Number</label> 
+                  <input type="text" id="phone" class="form-control" name="phone" value="{{user.phone}}">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                
+                <div class="col-md-12">
+                  <label class="text-black" for="email">Email</label> 
+                  <input type="email" id="email" class="form-control" name="email" value="{{user.email}}" readonly>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                
+                <div class="col-md-12">
+                  <label class="text-black" for="subject">Address</label> 
+                  <input type="subject" id="subject" class="form-control" name="address" value="{{user.address}}">
+                </div>
+              </div>
+
+             
+        
+              <div class="row form-group">
+                <div class="section-title mb-3">
+                <input type="submit" value="Save" class="btn btn-primary btn-md text-white"> 
+                </div>
+              </div>      
+          </div>
+      </div>
+    </div>
+  </section>
+</form>
+  
+<!--    user profile edit area end  -->
+
+
+ <!-- password area-->
+            
+        <section id="edit">
+          <div class="container"id="passtitle">
+            <br><br>
+              <h5 class="section-title mb-3" id="passtitle">Change Your Password </h5>
+                <form method="POST" class="p-5 bg-white"  >
+
+                  {% csrf_token %}
+      
+                  {{form|crispy}}
+
+                  <input type="submit" class="btn btn-primary btn-md text-white">
+               
+         
+                </form>
+          </div>
+        </section>
+<!-- password area end-->
+        
+{% endblock %}

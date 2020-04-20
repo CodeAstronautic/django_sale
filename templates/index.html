@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page %}
+    <div class="site-block-wrap">
+    <div class="owl-carousel with-dots">
+        
+  <!--img part-->
+  {% for product in products|slice:":3"  %}
+      <div class="site-blocks-cover overlay overlay-2" style="background-image: url('{{product.product_image.url}}');" data-aos="fade" id="home-section">
+  
+  
+        <div class="container">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-md-6 mt-lg-5 text-center">
+              <h1 class="text-shadow">{{product.product_name}}</h1>
+              <p class="mb-5 text-shadow">
+                {{product.description}} <br>
+                ⤤	 ₹{{product.product_price}}</p>
+              <p><a href="{% url 'productdetails' id=product.id %}"  class="btn btn-primary px-5 py-3">Start Bidding</a></p>
+              
+            </div>
+          </div>
+        </div>
+  
+        
+       </div>  
+  {% endfor %}
+    <!-- img part end-->
+
+    </div>   
+    
+  </div> 
+  
+<!--    product Display area  --> 
+<section class="site-section" id="product-section">
+  <div class="container">
+  <div class="row mb-6">
+    <div class="col-md-8 text-right">
+      <h2 class="section-title mb-3">Latest Arrival Products</h2>
+
+    </div>
+  </div>
+<div class="row">   
+  <div class="site-section" id="product-section">
+    <div class="container">
+      <div class="row large-gutters">
+        {% for product in products|slice:":6"  %}
+        <div class="col-md-6 col-lg-4 mb-5 mb-lg-5 ">
+          <div class="ftco-media-1">
+            <div class="ftco-media-1-inner">
+              <a href="{% url 'productdetails' id=product.id %}" class="d-inline-block mb-4"><img src="{{product.product_image.url}}" alt="FImageo" class="img-fluid"  style="width: 100% ; height: 240px;"></a>
+              <div class="ftco-media-details">
+              <h3>{{product.product_name}}</h3>
+              <!-- <p>New York - USA</p> -->
+              <strong>₹{{product.product_price}}</strong>
+              </div>
+            </div> 
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<a style="text-align: align-self: auto;" href="{% url 'allproduct' %}"  >More...</a>
+<!-- img display area end-->
+
+
+<div class="site-section" id="properties-section">
+  <div class="container">
+    <div class="row mb-5 align-items-center">
+      <div class="col-md-7 text-left">
+        <h2 class="section-title mb-3">Nearer Result</h2>
+      </div>
+      <div class="col-md-5 text-left text-md-right">
+        <div class="custom-nav1">
+          <a href="#" class="custom-prev1">Previous</a><span class="mx-3">/</span><a href="#" class="custom-next1">Next</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="owl-carousel nonloop-block-13 mb-5">
+      {% for lb in lb %}
+      
+        <div class="ftco-media-1">
+            <div class="ftco-media-1-inner">
+              <a href="{% url 'productdetails' id=lb.id %}" class="d-inline-block mb-4"><img src="{{lb.product_image.url}}" alt="FImageo" class="img-fluid"  style="width: 100% ; height: 240px;"></a>
+              <div class="ftco-media-details">
+                <h3>{{lb.product_name}}</h3>
+                <strong>₹{{lb.product_price}}</strong>
+              </div>
+
+            </div> 
+        </div> 
+        {% endfor %}
+    </div>
+    
+  </div>
+</div>
+
+
+<!-- login area -->
+    {% if user.is_authenticated %}
+    {% else  %}
+    
+  <section class="site-section bg-light bg-image" id="login-section">
+    <div class="container">
+          <div class="row mb-6">
+            <div class="col-12 text-center">
+              <h2 class="section-title mb-3">Log In</h2>
+            </div>
+          </div>
+      <div class="row mb-4">
+          <div class="col-md-6 mb-8">
+              
+              <form method='post' action="{% url 'loginuser' %}"  class="p-5 bg-white">
+                {% csrf_token %} 
+                
+                <div class="row form-group">
+                  
+                  <div class="col-md-12">
+                    <label class="text-black" for="email" required>Email</label> 
+                    <input type="email" id="email" name = 'email' class="form-control">
+                  </div>
+                </div>
+
+                  <div class="row form-group">
+                    <div class="col-md-12">
+                      <label class="text-black" for="password1" required>Password</label> 
+                      <input type="password" id="password1" name= 'password1' class="form-control" placeholder="Enter your password here...">
+                    </div>
+                  </div>
+    
+
+                <div class="row form-group">
+                  <div class="col-md-12">
+                  <!-- <input type="password" value="Log In" class="btn btn-primary btn-md text-white"> !-->
+                  <a href="{% url 'loginuser' %}"><input type="submit"  value="Log In" class="btn btn-primary btn-md text-white"></a>
+                  <a style="text-align: align-self: auto;" href="{% url 'password_reset' %}"  >Forget Password</a>
+                  </div>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- log in area end -->
+
+<!-- sign up section -->    
+
+<section class="site-section bg-light bg-image" id="signup_user-section">
+  <div class="container">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h2 class="section-title mb-3">Sign Up</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-5">
+
+            <form method="POST" action="{% url 'signup_user' %}" class="p-5 bg-white">
+              
+              {% csrf_token %}
+
+              <div class="row form-group">
+                <div class="col-md-6 mb-5 mb-md-0">
+                  <label class="text-black" >First Name</label>
+                  <input type="text" id="fname" class="form-control" style="text-transform: capitalize;" name="first_name">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="text-black" for="lname">Last Name</label>
+                  <input type="text" id="lname" class="form-control" style="text-transform: capitalize;" name="last_name">
+                </div>
+              </div>
+
+              
+              <div class="row form-group">
+                
+                <div class="col-md-6">
+                  <label class="text-black" for="phone">Mobile Number</label> 
+                  <input type="tel"  id="phone" class="form-control" name="phone">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                
+                <div class="col-md-12">
+                  <label class="text-black" for="email">Email</label> 
+                  <input type="email" id="email" class="form-control" name="email" required>
+                </div>
+              </div>
+
+
+              <div class="row form-group">
+                
+                <div class="col-md-12">
+                  <label class="text-black" for="subject">Address</label> 
+                  <input type="subject" id="subject" class="form-control" style="text-transform: capitalize;" name="address">
+                </div>
+              </div>
+
+              <div class="row form-group">
+
+                <div class="col-md-12">
+                  <label class="text-black" for="password1">Password</label> 
+                  <input type="password" id="password1" class="form-control" name="password1" placeholder="Enter your password here...">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label class="text-black" for="password2">Confirm Password</label> 
+                  <input type="password" id="password2" class="form-control" name="password2" placeholder="Confirm your password here...">
+                </div>
+              </div>
+
+              
+        
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                <input type="submit" value="Sign Up" class="btn btn-primary btn-md text-white"> 
+                </div>
+              </div>
+            </form>
+
+
+          </div>
+        </div>
+  </div>
+</section>
+{% endif  %}
+
+      <!-- signup area end -->
+{% endblock %}

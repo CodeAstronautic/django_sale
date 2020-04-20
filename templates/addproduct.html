@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page %}
+
+<body>
+  
+  <br>
+  <br>
+  <section class="py-5 bg-primary site-section how-it-works" id="howitworks-section">
+    <div class="container">
+      <div class="row mb-5 justify-content-center">
+        <div class="col-md-7 text-center">
+          <h2 class="section-title mb-3 text-black">Enter Your Product Details</h2>
+        </div>
+      </div>
+    </div>  
+  </section>
+
+<!-- form area start-->
+
+     
+    <form method="POST"  class="p-5 bg-white" enctype = "multipart/form-data">
+              
+        {% csrf_token %}
+
+        <div class="row form-group">
+          <div class="col-md-6">
+            <label class="text-black" >Product Name</label>
+            <input type="text" id="lname" class="form-control" style="text-transform: capitalize;" name="product_name">
+          </div>
+        </div>
+
+        <div class="row form-group">
+          
+          <div class="col-md-12">
+            <label class="text-black" >Add Image</label> 
+            <input type="file" name="product_image" enctype="multipart/form-data">
+
+
+            <label class="text-black" >Product Category</label> 
+                <select name='category'>
+                  {% for cat in cat %}
+                          <option value="{{ cat.id }}"> {{ cat.category }}</option>
+                  {% endfor %}
+                  </select>
+            
+            </div>
+            <!-- <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Category</button> -->
+          </div>
+    
+        
+        <div class="row form-group">
+          
+          <div class="col-md-3">
+            <label class="text-black">Enter Price</label> 
+            <input type="text" id="subject" class="form-control" name="product_price">
+
+            <label class="text-black" >Result Date</label> 
+            <input type="date"  class="form-control" name="rdate">
+          </div>
+        </div>
+
+        <div class="row form-group">
+
+          <div class="col-md-12">
+            <label class="text-black" for="password1">Description</label> 
+            <input type="text "class="form-control" style="text-transform: capitalize;" name="description" >
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-12">
+            <input type="submit" value="Save and Upload" class="btn btn-primary btn-md text-white"> 
+          </div>
+        </div>
+      </form>
+
+
+<!-- form area end-->
+
+
+
+
+
+
+{% endblock %}

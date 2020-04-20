@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page %}
+
+
+<body>
+
+    <!--new form by me for my product details-->
+    
+      <section class="site-section" id="about-section">
+        <div class="container">
+            <h2 class="section-title mb-3">All Products of {{user.first_name}}</h2>
+            
+            {% for mypros in mypros %}
+            <div class="row large-gutters">
+                <div class="col-lg-6 mb-5">
+                <div class="owl-carousel slide-one-item with-dots">
+                      <div><img src="{{mypros.product_image.url}}" alt="Image" class="img-fluid" ></div>
+    <!--              <div><img src="{% static 'images/img_2.jpg' %}" alt="Image" class="img-fluid"></div>
+                      <div><img src="{% static 'images/img_3.jpg' %}" alt="Image" class="img-fluid"></div>
+    -->
+                </div>
+    
+              </div>
+              
+              <div class="col-lg-6 ml-auto"> 
+                <h2 class="section-title mb-3">{{mypros.product_name}}</h2>
+                    <p class="lead">{{mypros.description}}</p>
+                    
+    
+                    <ul class="list-unstyled ul-check success">
+                      <li><b> Auctioneer Name</b>                              {{mypros.first_name.first_name}}</li>
+                      <li><b> {{mypros.category.category}} name</b>          {{mypros.product_name}}</li>
+                      <li ><b> Mark Price</b>                                   ₹<span id="markedprice">{{mypros.product_price}}</span></li>
+                      <li><b>Result Date</b>                                    {{mypros.rdate}}</li>
+
+                      <!-- <li><b> Category</b>       {{product.category.category}}</li> -->
+                      <a href="{% url 'productdetails' id=mypros.id  %}" class="d-inline-block mb-4">View Top Ten Bid For This Product</a>
+                      <br>
+                      <a href="{% url 'pdel'  %}" class="d-inline-block mb-4">Delete</a>
+                      
+                      
+                     
+                    </ul>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+      </section>
+    
+
+   
+</div>
+ 
+
+{% endblock %}
